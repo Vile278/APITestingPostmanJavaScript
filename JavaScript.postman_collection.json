@@ -1,0 +1,232 @@
+{
+	"info": {
+		"_postman_id": "5e994317-5267-4b18-956a-83f2d200bb6a",
+		"name": "JavaScript",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "3786967"
+	},
+	"item": [
+		{
+			"name": "Study Postman",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"/* I. Section 1: Basic */\r",
+							"console.clear();\r",
+							"console.log(\"********************** Section I ******************\");\r",
+							"let name =\"vile\";\r",
+							"console.log(name);\r",
+							"console.log(\"Normal function 1: \");\r",
+							"function greet(name) {\r",
+							"    console.log (\"Hello world \" + name + \"!\");\r",
+							"}\r",
+							"greet(\"vile\");\r",
+							"\r",
+							"console.log(\"Normal function 2: \");\r",
+							"function sum(a,b){\r",
+							"    return (a+b);\r",
+							"}\r",
+							"console.log(\"The sum of 1 and 2 is: \" + sum(1,2));\r",
+							"\r",
+							"console.log (typeof(\"abc123\"));\r",
+							"console.log (typeof(123));\r",
+							"console.log (typeof(true));\r",
+							"\r",
+							"console.log(\"function in an Object: \");\r",
+							"let person = {\r",
+							"    firstName: \"Viet\",\r",
+							"    lastName: \"Le\",\r",
+							"    age: 30,\r",
+							"    isAdult: false,\r",
+							"    hobbies: [\"Meditation\", \"Garden\", \"Property\"],\r",
+							"    greet: function(name) {\r",
+							"        console.log(\"Hello \" + name + \" your Last name is \" + this.lastName );\r",
+							"    }\r",
+							"}\r",
+							"console.log (typeof(person));\r",
+							"person.greet(\"Jake\");\r",
+							"\r",
+							"console.log(\"function in a variable x: \");\r",
+							"const x = function() {\r",
+							"    console.log(\"Hello x function\");\r",
+							"}\r",
+							"\r",
+							"x();\r",
+							"\r",
+							"/* callback function */\r",
+							"const sayHello = function() {\r",
+							"    console.log(\"Hello from sayHello function\");\r",
+							"}\r",
+							"\r",
+							"function doSomething(someFunction){\r",
+							"    console.log(\"Before running the function sayHello\");\r",
+							"    someFunction();\r",
+							"    console.log(\"After running the function say Hello\");\r",
+							"}\r",
+							"doSomething(sayHello);\r",
+							"\r",
+							"\r",
+							"\r",
+							"/* II. Section 2: Body */\r",
+							"/* Truy cập đến body */\r",
+							"console.log(\"********************** Section II ******************\");\r",
+							"const response = pm.response.json();\r",
+							"console.log(response);\r",
+							"console.log(response.token_type);\r",
+							"console.log(response.scope);\r",
+							"console.log(response.access_token);\r",
+							"\r",
+							"/* Tạo biến firstName và save lên collection bên trên */\r",
+							"pm.collectionVariables.set(\"firstName\", \"Jame\"); \r",
+							"\r",
+							"\r",
+							"/* III. Section 3: Test */\r",
+							"/* assertions a test */\r",
+							"console.log(\"********************** Section III ******************\");\r",
+							"verifyResponseCode(200);\r",
+							"verifyResponseJson();\r",
+							"verifyBodyHasAccessToken(response); /* version 1 */\r",
+							"verifyBodyHasProperty(response,'access_token'); /* Ver 2 */\r",
+							"verifyBodyHasProperty(response,'scope'); /* Ver 2 */\r",
+							"verifyBodyHasSchema(response);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "client_id",
+							"value": "47a85eea-3446-4c69-ab82-4373917414ed",
+							"type": "text"
+						},
+						{
+							"key": "scope",
+							"value": "https://graph.microsoft.com/.default",
+							"type": "text"
+						},
+						{
+							"key": "grant_type",
+							"value": "password",
+							"type": "text"
+						},
+						{
+							"key": "username",
+							"value": "thuyadmin@thuydom3.onmicrosoft.com",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "devLab08@@",
+							"type": "text"
+						},
+						{
+							"key": "client_secret",
+							"value": "sNY8Q~aJkL3chHl0oor7WzDWLF3d3BNkEtxcrckU",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "https://login.microsoftonline.com/fc680613-a5f0-48f1-ab0b-f5894538942f/oauth2/v2.0/token",
+					"protocol": "https",
+					"host": [
+						"login",
+						"microsoftonline",
+						"com"
+					],
+					"path": [
+						"fc680613-a5f0-48f1-ab0b-f5894538942f",
+						"oauth2",
+						"v2.0",
+						"token"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					"verifyResponseCode = (expectCode) => {",
+					"        pm.test(\"Status code: \" + expectCode, () => {",
+					"            pm.response.to.have.status(expectCode);",
+					"        });",
+					"    };",
+					"verifyResponseJson = () => {",
+					"        pm.test(\"Return value is json format\", () => {",
+					"            pm.response.to.be.jsonSchema;",
+					"        });",
+					"    };    ",
+					"verifyBodyHasAccessToken = (response) => {",
+					"        pm.test(\"Body has Access Token\", () => {",
+					"            pm.expect(response).to.have.property('access_token');",
+					"        });",
+					"    }; ",
+					"    verifyBodyHasScope = (response) => {",
+					"        pm.test(\"Body has Access Token\", () => {",
+					"            pm.expect(response).to.have.property('scope');",
+					"        });",
+					"    }; ",
+					"verifyBodyHasProperty = (response, property1) => {",
+					"        pm.test(\"Body has \" + property1, () => {",
+					"            pm.expect(response).to.have.property(property1);",
+					"        });",
+					"    }; ",
+					"verifyBodyHasSchema = (response) => {",
+					"        const schemaX = {",
+					"            \"token_type\": \"string\",",
+					"            \"scope\": \"string\",",
+					"            \"expires_in\": Number,",
+					"            //\"ext_expires_in\": Number,",
+					"            \"access_token\": number",
+					"        }",
+					"        pm.test(\"Body has corrected schema \", () => {",
+					"            pm.response.to.have.jsonSchema(schemaX);   ",
+					"        });",
+					"    }; ",
+					"",
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "name",
+			"value": "hello",
+			"type": "string"
+		},
+		{
+			"key": "autoToken",
+			"value": ""
+		},
+		{
+			"key": "firstName",
+			"value": ""
+		}
+	]
+}
